@@ -1,0 +1,34 @@
+# API Documentation for <span><%= @resource %></span>
+<% @resource_routes.each do |route| %>
+## <%= '%s: %s' % [route[:route_method], route[:route_path]] %>
+
+<%=  route[:route_description] %>
+
+<% if route[:params][:required].keys.any? %>
+### Request Parameters
+<%= route[:params][:required].collect { |key, value| '* **:%s** - %s' % [key, (value.is_a?(Hash) ? '[Hash] %s' % value : value)] }.join("\n") %><% end %>
+<% if route[:params][:optional].keys.any? %>
+### Optional Request Parameters
+<%= route[:params][:optional].collect { |key, value| '* **:%s** - %s' % [key, value] }.join("\n") %><% end %>
+
+### Example Usage
+<%
+  url = route[:route_path]
+  route[:params][:all].each do |k,v|
+    s = ':' + k.to_s
+    if url.include?(s)
+      url.gsub! s, v.to_s
+      route[:params][:all].delete k
+    end
+  end
+%>
+<% if route[:settings][:version_options][:using] == :header %>
+```
+curl -H Accept=application/vnd.<%=route[:settings][:version_options][:vendor]%>-<%= route[:settings][:version].first %>+<%= route[:settings][:format] %> <%= '-X%s' % route[:route_method] %> <%= url %><%= '-D "%s"' % route[:route_params].to_json if route[:route_params].keys.any?  %>
+```
+<% elsif route[:settings][:version_options][:using] == :path %>
+```
+curl <%= '-X%s' % route[:route_method] %> <%= url %><%= ' -D "%s"' % route[:params][:all].to_json if route[:params][:all].keys.any? && route[:route_method].downcase != 'get'  %>
+```
+<% end %>
+<% end %>
