@@ -61,7 +61,6 @@ module GrapeDoc
         @resource_routes = config[:routes]
         template = ERB.new(resources_template)
         md = template.result(binding)
-        md.gsub! /[\n]{2}/,"\n"
         path = File.dirname(config[:path])
         File.open(File.join(path,'README.md'),'w') do |f|
           f.write(md)

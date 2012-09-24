@@ -3,13 +3,18 @@
 ## <%= '%s: %s' % [route[:route_method], route[:route_path]] %>
 
 <%=  route[:route_description] %>
-
 <% if route[:params][:required].keys.any? %>
+
 ### Request Parameters
-<%= route[:params][:required].collect { |key, value| '* **:%s** - %s' % [key, (value.is_a?(Hash) ? '[Hash] %s' % value : value)] }.join("\n") %><% end %>
+
+<%= route[:params][:required].collect { |key, value| '* **:%s** - %s' % [key, (value.is_a?(Hash) ? '[Hash] %s' % value : value)] }.join("\n") %>
+<% end %>
 <% if route[:params][:optional].keys.any? %>
+
 ### Optional Request Parameters
-<%= route[:params][:optional].collect { |key, value| '* **:%s** - %s' % [key, value] }.join("\n") %><% end %>
+
+<%= route[:params][:optional].collect { |key, value| '* **:%s** - %s' % [key, value] }.join("\n") %>
+<% end %>
 
 ### Example Usage
 <%
