@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+#/ Usage: grape_doc [-p <path>] [-f <format>] [-o <output>]
+#/ Generate documentation for Grape API resources
+#/
+#/ Options:
+#/   -p, --path=<path>      Relative path to Grape API base directory
+#/   -f, --format=<format>  Output format (markdown / html)
+#/   -o, --output=<dir>     Directory where generated HTML files are written (only for --format=html)
+#/       --help             Show this help message
+
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'optparse'
+require 'grape'
+require 'grape_doc'
+
+# Write usage message to stdout and exit.
+def usage(stream=$stderr, status=1)
+  stream.puts File.readlines(__FILE__).
+                grep(/^#\//).
+                map { |line| line.sub(/^#. ?/, '') }.
+                join
+  exit status
+end
+
+# Like `Kernel#abort` but writes a note encouraging the user to consult
+# `grape_doc --help` for more information.
+def abort_with_note(message=nil)
+  $stderr.puts message if message
+  abort "See `grape_doc --help' for usage information."
+end
+
+# Parse command line options, aborting if anything goes wrong.
+options = { :format => 'markdown' }
+ARGV.options { |o|
+  o.program_name = File.basename($0)
+  o.on("-o", "--output=DIR") { |dir| options[:output_dir] = dir }
+  o.on("-f", "--format=FORMAT") { |format| options[:format] = format || 'markdown' }
+  o.on("-p", "--path=PATH") { |path| options[:path] = path }
+  o.on_tail("-h", "--help") { usage($stdout, 0) }
+  o.parse!
+} or abort_with_note
+
+abort_with_note "Resources path is required" if options[:path].nil?
+
+base_dir = File.expand_path('.', options[:path])
+parser = GrapeDoc::Parser.new base_dir
+parser.build_routes
+
+if options[:format] == 'markdown'
+  parser.resource_as_markdown
+end
