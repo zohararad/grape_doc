@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = GrapeDoc::VERSION
   gem.authors       = ["Zohar Arad"]
   gem.email         = ["zohar@zohararad.com"]
-  gem.description   = %q{TODO: Generate Grape API documentation}
-  gem.summary       = %q{TODO: Document your Grape API}
+  gem.description   = %q{Generate Grape API documentation}
+  gem.summary       = %q{Document your Grape API}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
