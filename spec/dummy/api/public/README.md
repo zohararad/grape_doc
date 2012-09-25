@@ -13,3 +13,18 @@ Return a yell
 ```
 curl -XGET /api/v1/public/yells/12.json
 ```
+
+## POST: /api/v1/public/yells.json
+
+Create a yell
+
+### Request Parameters
+
+* **:words** - Array of Hashes:
+ * **:phrase** - [String] Phrase to yell
+
+### Example Usage
+
+```
+curl -XPOST /api/v1/public/yells.json -D "{"words":[{"phrase":"A String"}]}"
+```
