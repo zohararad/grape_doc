@@ -14,6 +14,7 @@ module GrapeDoc
       @base_module = nil
       @base_dir = base_dir
       @api_classes = []
+      @documented_routes = []
       cleanup
       include_api_resources
     end
@@ -43,6 +44,7 @@ module GrapeDoc
           end
           h[:route_path].gsub! /\(\.\:format\)/, '.%s' % resource.format.to_s
           h[:route_path].gsub! /\:version/, h[:route_version]
+          next if @documented_routes.include? h[:route_path]
           required = (options[:route_options][:params] ? options[:route_options][:params].dup : {})
           optional = (options[:route_options][:optional_params] ? options[:route_options][:optional_params].dup : {})
           all = required.merge(optional)
@@ -53,6 +55,7 @@ module GrapeDoc
             :all => prepare_mock_params(all)
           }
           @routes[key][:routes] << h
+          @documented_routes << h[:route_path]
         end
       end
     end
