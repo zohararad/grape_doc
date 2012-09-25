@@ -5,6 +5,10 @@
 <%= '%s* **:%s** - Hash:' % [spaces,key] %>
 <%= partial(:template => 'params', :locals => {:route_params => value, :indent => (@locals[:indent] + 1) }) %>
 
+<% elsif value.is_a?(Array) && value.first.is_a?(Hash) %>
+<%= '%s* **:%s** - Array of Hashes:' % [spaces,key] %>
+<%= partial(:template => 'params', :locals => {:route_params => value.first, :indent => (@locals[:indent] + 1) }) %>
+
 <% else %>
 <%= '%s* **:%s** - %s' % [spaces,key,value] %>
 
