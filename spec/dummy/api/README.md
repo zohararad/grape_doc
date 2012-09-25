@@ -48,39 +48,3 @@ Returns a shout
 ```
 curl -XGET /api/v1/shouts/12.json
 ```
-
-## POST: /api/v1/shouts.json
-
-Create a shout
-
-### Request Parameters
-
-* **:shout** - [String] Shout to create
-* **:voice** - Hash:
- * **:sound** - [String] Sound to play (male|female)
- * **:pitch** - [Integer] Pitch Level
-
-### Example Usage
-
-```
-curl -XPOST /api/v1/shouts.json -D "{"shout":"A String","voice":{"sound":"female","pitch":12}}"
-```
-
-## PUT: /api/v1/shouts/:id.json
-
-Update a shout
-
-### Request Parameters
-
-* **:id** - [Integer] Shout ID
-* **:shout** - [String] Shout to update
-
-### Optional Request Parameters
-
-* **:owner** - [Integer] Shout owner ID
-
-### Example Usage
-
-```
-curl -XPUT /api/v1/shouts/12.json -D "{"shout":"A String","owner":12}"
-```
