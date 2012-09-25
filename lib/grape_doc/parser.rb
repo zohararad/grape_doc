@@ -63,7 +63,7 @@ module GrapeDoc
         template = ERB.new(resources_template)
         md = template.result(binding)
         path = File.dirname(config[:path])
-        File.open(File.join(path,'README.md'),'w') do |f|
+        File.open(File.join(path,'README.md'),'a') do |f|
           f.write(md)
         end
       end
