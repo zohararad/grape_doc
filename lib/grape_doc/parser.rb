@@ -16,7 +16,6 @@ module GrapeDoc
       @base_dir = base_dir
       @api_classes = []
       @documented_routes = []
-      cleanup
       include_api_resources
     end
 
@@ -62,6 +61,7 @@ module GrapeDoc
     end
 
     def resources_as_markdown
+      cleanup
       resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.md.erb'))
       @routes.each do |resource, config |
         next unless config[:routes].any?
