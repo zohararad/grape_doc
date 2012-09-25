@@ -109,7 +109,8 @@ module GrapeDoc
         :Date => Time.now.strftime('%Y-%m-%d'),
         :DateTime => Time.now.strftime('%Y-%m-%d %H:%M:%s'),
         :ISODate => Time.now.strftime('%FT%X.%LZ'),
-        :ObjectId => '5011133611f1af2dfc0000f7'
+        :ObjectId => '5011133611f1af2dfc0000f7',
+        :URL => 'http://www.example.com/some_page'
       }
       params.each do |k,v|
         if v.is_a? Hash
