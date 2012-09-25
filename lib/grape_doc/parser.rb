@@ -1,5 +1,6 @@
 require 'erb'
 require 'json'
+require 'uri'
 
 module GrapeDoc
   class Parser
@@ -59,6 +60,7 @@ module GrapeDoc
     def resource_as_markdown
       resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.erb'))
       @routes.each do |resource, config |
+        next unless config[:routes].any?
         @resource = resource
         @resource_routes = config[:routes]
         template = ERB.new(resources_template)
@@ -96,7 +98,11 @@ module GrapeDoc
         :String => 'A String',
         :Array => [1,2,3],
         :Hash => {:a => 1, :b => 2},
-        :JSON => {:a =>1, :b => 2}.to_json
+        :JSON => {:a =>1, :b => 2}.to_json,
+        :Date => Time.now.strftime('%Y-%m-%d'),
+        :DateTime => Time.now.strftime('%Y-%m-%d %H:%M:%s'),
+        :ISODate => Time.now.strftime('%FT%X.%LZ'),
+        :ObjectId => '5011133611f1af2dfc0000f7'
       }
       params.each do |k,v|
         if v.is_a? Hash
