@@ -76,9 +76,7 @@ module GrapeDoc
       partial_template = File.read(File.join(File.dirname(__FILE__),'templates','_%s.erb' % options[:template]))
       @locals = options[:locals]
       template = ERB.new(partial_template, 0, '<>')
-      r = template.result(binding).gsub /\n{2}/, "\n"
-      puts r.inspect
-      r
+      template.result(binding).gsub /\n{2}/, "\n"
     end
 
     private
