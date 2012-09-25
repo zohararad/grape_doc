@@ -10,6 +10,8 @@ module GrapeDoc
 
     ROUTE_METHODS = %w(route_prefix route_version route_namespace route_method route_path route_params route_description)
 
+    # Initialize the Grape API Documentation parser
+    # @param [String] base_dir the base directory for Grape API resource files
     def initialize(base_dir)
       @base_module_name = File.basename(base_dir).split(/[\W_-]/).map(&:capitalize).join
       @base_module = nil
@@ -19,6 +21,7 @@ module GrapeDoc
       include_api_resources
     end
 
+    # Build a map of all available routes, with all details about each route
     def build_routes
       @routes = {}
       callbacks = ROUTE_METHODS
@@ -60,6 +63,8 @@ module GrapeDoc
       end
     end
 
+    # Generate API resources documentation as Markdown.
+    # Adds a README.md for each resource sub-directory
     def resources_as_markdown
       cleanup
       resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.md.erb'))
@@ -76,6 +81,8 @@ module GrapeDoc
       end
     end
 
+    # Generate API resources documentation as HTML and writes them to specified output folder
+    # @param [String] output_folder path to HTML output directory
     def resources_as_html(output_folder)
       resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.html.erb'))
       @routes.each do |resource, config |
@@ -98,6 +105,11 @@ module GrapeDoc
       FileUtils.cp_r(File.join(File.dirname(__FILE__),'templates','assets','css'), output_folder)
     end
 
+    # Add ERB partial rendering support
+    # Takes a partial template name and renders it as ERB with local variables
+    # @param [Hash] options
+    # @option [String] template ERB template to render
+    # @option [Hash] locals Hash of local variables passed to template
     def partial(options)
       partial_template = File.read(File.join(File.dirname(__FILE__),'templates','_%s.erb' % options[:template]))
       @locals = options[:locals]
@@ -107,6 +119,7 @@ module GrapeDoc
 
     private
 
+    # Includes each API resource Ruby file
     def include_api_resources
       files = Dir["#{@base_dir}/**/*.rb"]
       files = files.map { |file| [file.count("/"), file] }
@@ -117,6 +130,8 @@ module GrapeDoc
       }
     end
 
+    # Takes a path to a Grape::API class file and converts it to a Ruby class for later access
+    # @param [String] path the path to a Grape::API resource file
     def add_api_class(path)
       parts = path.sub(@base_dir, '')[1...-3].split('/')
       c = parts.collect{|s| "const_get('#{s.capitalize}')" }.join('.')
@@ -124,6 +139,9 @@ module GrapeDoc
       @api_classes << {:resource => @base_module.instance_eval(c), :path => path}
     end
 
+    # Prepares request params with mock values for documentation examples
+    # @param [Hash] params request params to generate example values for
+    # @return [Hash] params with example values
     def prepare_mock_params(params)
       h = {
         :Integer => 12,
@@ -158,6 +176,7 @@ module GrapeDoc
       return params
     end
 
+    # Cleans old Markdown files before generating markdown documentation
     def cleanup
       Dir["#{@base_dir}/**/*.md"].each do |f|
         File.delete f
