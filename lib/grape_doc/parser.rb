@@ -19,6 +19,7 @@ module GrapeDoc
 
     def build_routes
       @routes = {}
+      callbacks = ROUTE_METHODS
       @api_classes.each do |c|
         resource = c[:resource]
         key = resource.to_s
@@ -27,7 +28,6 @@ module GrapeDoc
           :routes => [],
           :format => resource.format
         }
-        callbacks = ROUTE_METHODS
         resource.endpoints.each do |endpoint|
           route = endpoint.routes.first
           options = endpoint.options
@@ -35,6 +35,7 @@ module GrapeDoc
           endpoint.settings.stack.each do |s|
             settings.merge! s
           end
+          next if settings[:namespace].nil? || settings[:namespace].empty?
           h = {:settings => settings}
           callbacks.each do |cb|
             h[cb.to_sym] = route.send cb.to_sym
@@ -100,6 +101,8 @@ module GrapeDoc
       params.each do |k,v|
         if v.is_a? Hash
           params[k] = prepare_mock_params(v.dup)
+        elsif v.is_a? Array
+          params[k] = v.collect{ |val| prepare_mock_params(val.dup) }
         else
           m = v.match /\[(\w+)\]/
           unless m.nil?
