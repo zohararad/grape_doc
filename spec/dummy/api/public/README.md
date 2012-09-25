@@ -4,17 +4,12 @@
 
 Return a yell
 
-
 ### Request Parameters
 
 * **:id** - [Integer] yell ID
 
-
-
 ### Example Usage
-
 
 ```
 curl -XGET /api/v1/public/yells/12.json
 ```
-
