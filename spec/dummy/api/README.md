@@ -1,4 +1,3 @@
-# API Documentation for <span>Api::Base</span>
 # API Documentation for <span>Api::Ping</span>
 
 ## GET: /api/v1/pings.json
