@@ -1,0 +1,29 @@
+pre {
+  white-space: normal;
+  background: #F0EBCD;
+  color: #493421;
+  font-family: "Courier New", monospace;
+  padding: 10px;
+  border:1px solid #d5d0b0;
+  border-radius: 3px;
+}
+
+pre code {
+  background: transparent;
+}
+
+section.row + section.row {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #e1e1e1;
+}
+
+p.route_description,
+.params li{
+  font-size: 23px;
+}
+
+.params li strong{
+  color: #4DBEE7;
+}

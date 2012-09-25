@@ -1,6 +1,7 @@
 require 'erb'
 require 'json'
 require 'uri'
+require 'fileutils'
 
 module GrapeDoc
   class Parser
@@ -75,7 +76,7 @@ module GrapeDoc
       end
     end
 
-    def resource_as_html(output_folder)
+    def resources_as_html(output_folder)
       resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.html.erb'))
       @routes.each do |resource, config |
         next unless config[:routes].any?
@@ -88,6 +89,13 @@ module GrapeDoc
           f.write(html)
         end
       end
+      index_template = File.read(File.join(File.dirname(__FILE__),'templates','index.html.erb'))
+      template = ERB.new(index_template, 0, '<>')
+      html = template.result(binding)
+      File.open(File.join(output_folder,'index.html'),'w') do |f|
+        f.write(html)
+      end
+      FileUtils.cp_r(File.join(File.dirname(__FILE__),'templates','assets','css'), output_folder)
     end
 
     def partial(options)

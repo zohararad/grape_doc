@@ -1,0 +1,17 @@
+
+<ul>
+<% @locals[:route_params].each do |key, value| %>
+  <li>
+    <strong>:<%= key %></strong>
+    <% if value.is_a? Hash %>
+      <span> - Hash:</span>
+      <%= partial(:template => 'params.html', :locals => {:route_params => value}) %>
+    <% elsif value.is_a?(Array) && value.first.is_a?(Hash) %>
+      <span> - Array of Hashes:</span>
+      <%= partial(:template => 'params.html', :locals => {:route_params => value.first }) %>
+    <% else %>
+      <span> - <%= value %></span>
+    <% end %>
+  </li>
+<% end %>
+</ul>

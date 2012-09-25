@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Documentation - Api::Public::Yell</title>
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="css/foundation.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/grape_doc.css" />
+</head>
+<body>
+  <nav class="top-bar">
+    <ul>
+      <li class="name"><h1><a href="#">API Documentation - Api::Public::Yell</a></h1></li>
+    </ul>
+    <section>
+      <ul class="right">
+        <li><a href="index.html">Back to Resource Index</a></li>
+      </ul>
+    </section>
+  </nav>
+  
+    <section class="row">
+      <header>
+        <h2 class="subheader"><strong>GET</strong>: /api/v1/public/yells/:id.json</h2>
+        <p class="route_description offset-by-one">
+          Return a yell
+        </p>
+      </header>
+      <div>
+        
+          <h4 class="subheader">Request Parameters:</h4>
+          <div class="offset-by-one params">
+            
+<ul>
+  <li>
+    <strong>:id</strong>
+    
+      <span> - [Integer] yell ID</span>
+    
+  </li>
+</ul>
+          </div>
+        
+        
+      </div>
+      <footer>
+        <h4 class="subheader">Example Usage:</h4>
+        
+        <pre class="offset-by-one">
+          <code>
+          
+            curl -XGET /api/v1/public/yells/12.json
+          
+          </code>
+        </pre>
+      </footer>
+    </section>
+  
+    <section class="row">
+      <header>
+        <h2 class="subheader"><strong>POST</strong>: /api/v1/public/yells.json</h2>
+        <p class="route_description offset-by-one">
+          Create a yell
+        </p>
+      </header>
+      <div>
+        
+          <h4 class="subheader">Request Parameters:</h4>
+          <div class="offset-by-one params">
+            
+<ul>
+  <li>
+    <strong>:words</strong>
+    
+      <span> - Array of Hashes:</span>
+      
+<ul>
+  <li>
+    <strong>:phrase</strong>
+    
+      <span> - [String] Phrase to yell</span>
+    
+  </li>
+</ul>
+    
+  </li>
+</ul>
+          </div>
+        
+        
+      </div>
+      <footer>
+        <h4 class="subheader">Example Usage:</h4>
+        
+        <pre class="offset-by-one">
+          <code>
+          
+            curl -XPOST /api/v1/public/yells.json -D "{"words":[{"phrase":"A String"}]}"
+          
+          </code>
+        </pre>
+      </footer>
+    </section>
+  
+</body>
+</html>

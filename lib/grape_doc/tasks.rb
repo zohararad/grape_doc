@@ -25,6 +25,8 @@ namespace :grape do
 
     if options[:format] == 'markdown'
       parser.resources_as_markdown
+    elsif options[:format] == 'html'
+      parser.resources_as_html(options[:output])
     end
 
   end
