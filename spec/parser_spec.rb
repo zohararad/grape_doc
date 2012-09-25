@@ -4,9 +4,6 @@ describe GrapeDoc::Parser do
 
   before :all do
     @base_dir = File.join(File.dirname(__FILE__),'dummy','api')
-    Dir["#{@base_dir}/**/*.md"].each do |f|
-      File.delete f
-    end
     @parser = GrapeDoc::Parser.new @base_dir
   end
 

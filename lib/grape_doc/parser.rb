@@ -13,6 +13,7 @@ module GrapeDoc
       @base_module = nil
       @base_dir = base_dir
       @api_classes = []
+      cleanup
       include_api_resources
     end
 
@@ -107,6 +108,12 @@ module GrapeDoc
         end
       end
       return params
+    end
+
+    def cleanup
+      Dir["#{@base_dir}/**/*.md"].each do |f|
+        File.delete f
+      end
     end
   end
 end
