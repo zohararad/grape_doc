@@ -119,9 +119,14 @@ module GrapeDoc
         elsif v.is_a? Array
           params[k] = v.collect{ |val| prepare_mock_params(val.dup) }
         else
-          m = v.match /\[(\w+)\]/
-          unless m.nil?
-            params[k] = h[m[1].to_sym]
+          optional_match = v.match /\(([\w\s\|]+)\)/
+          if optional_match != nil
+            params[k] = optional_match[1].split('|').sample
+          else
+            type_match = v.match /\[(\w+)\]/
+            unless type_match.nil?
+              params[k] = h[type_match[1].to_sym]
+            end
           end
         end
       end
