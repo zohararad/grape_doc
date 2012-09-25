@@ -24,7 +24,7 @@ namespace :grape do
     parser.build_routes
 
     if options[:format] == 'markdown'
-      parser.resource_as_markdown
+      parser.resources_as_markdown
     end
 
   end

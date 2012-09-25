@@ -28,7 +28,7 @@ describe GrapeDoc::Parser do
   end
 
   it 'should generate Markdown files per resource' do
-    @parser.resource_as_markdown
+    @parser.resources_as_markdown
     Dir["#{@base_dir}/**/*.md"].size.should > 0
   end
 

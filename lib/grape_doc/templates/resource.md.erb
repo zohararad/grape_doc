@@ -8,12 +8,12 @@
 <% if route[:params][:required].keys.any? %>
 
 ### Request Parameters
-<%= partial(:template => 'params', :locals => {:route_params => route[:params][:required], :indent => 0 }) %>
+<%= partial(:template => 'params.md', :locals => {:route_params => route[:params][:required], :indent => 0 }) %>
 <% end %>
 <% if route[:params][:optional].keys.any? %>
 
 ### Optional Request Parameters
-<%= partial(:template => 'params', :locals => {:route_params => route[:params][:optional], :indent => 0 }) %>
+<%= partial(:template => 'params.md', :locals => {:route_params => route[:params][:optional], :indent => 0 }) %>
 <% end %>
 
 ### Example Usage

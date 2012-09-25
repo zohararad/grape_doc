@@ -60,8 +60,8 @@ module GrapeDoc
       end
     end
 
-    def resource_as_markdown
-      resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.erb'))
+    def resources_as_markdown
+      resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.md.erb'))
       @routes.each do |resource, config |
         next unless config[:routes].any?
         @resource = resource
@@ -71,6 +71,21 @@ module GrapeDoc
         path = File.dirname(config[:path])
         File.open(File.join(path,'README.md'),'a') do |f|
           f.write(md)
+        end
+      end
+    end
+
+    def resource_as_html(output_folder)
+      resources_template = File.read(File.join(File.dirname(__FILE__),'templates','resource.html.erb'))
+      @routes.each do |resource, config |
+        next unless config[:routes].any?
+        @resource = resource
+        @resource_routes = config[:routes]
+        template = ERB.new(resources_template, 0, '<>')
+        html = template.result(binding)
+        file = File.basename(config[:path]).sub('.rb','.html')
+        File.open(File.join(output_folder,file),'w') do |f|
+          f.write(html)
         end
       end
     end
