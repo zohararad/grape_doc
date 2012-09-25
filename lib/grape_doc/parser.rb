@@ -9,7 +9,7 @@ module GrapeDoc
     ROUTE_METHODS = %w(route_prefix route_version route_namespace route_method route_path route_params route_description)
 
     def initialize(base_dir)
-      @base_module_name = File.basename(base_dir).capitalize
+      @base_module_name = File.basename(base_dir).split(/[\W_-]/).map(&:capitalize).join
       @base_module = nil
       @base_dir = base_dir
       @api_classes = []
