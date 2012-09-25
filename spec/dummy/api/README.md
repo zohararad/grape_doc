@@ -57,12 +57,13 @@ Create a shout
 
 * **:shout** - [String] Shout to create
 * **:voice** - Hash:
+ * **:sound** - [String] Sound to play (male|female)
  * **:pitch** - [Integer] Pitch Level
 
 ### Example Usage
 
 ```
-curl -XPOST /api/v1/shouts.json -D "{"shout":"A String","voice":{"pitch":12}}"
+curl -XPOST /api/v1/shouts.json -D "{"shout":"A String","voice":{"sound":"female","pitch":12}}"
 ```
 
 ## PUT: /api/v1/shouts/:id.json

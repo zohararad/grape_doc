@@ -16,7 +16,7 @@ module Api
         # Do something
       end
 
-      desc "Create a shout", { :params => {:shout => '[String] Shout to create', :voice => {:pitch => '[Integer] Pitch Level'}}}
+      desc "Create a shout", { :params => {:shout => '[String] Shout to create', :voice => {:sound => '[String] Sound to play (male|female)', :pitch => '[Integer] Pitch Level'}}}
       post do
         # Do something
       end
