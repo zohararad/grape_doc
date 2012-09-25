@@ -1,0 +1,12 @@
+
+<% spaces = ' ' * @locals[:indent] %>
+<% @locals[:route_params].each do |key, value| %>
+<% if value.is_a? Hash %>
+<%= '%s* **:%s** - Hash:' % [spaces,key] %>
+<%= partial(:template => 'params', :locals => {:route_params => value, :indent => (@locals[:indent] + 1) }) %>
+
+<% else %>
+<%= '%s* **:%s** - %s' % [spaces,key,value] %>
+
+<% end %>
+<% end %>

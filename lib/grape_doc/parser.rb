@@ -63,13 +63,22 @@ module GrapeDoc
         next unless config[:routes].any?
         @resource = resource
         @resource_routes = config[:routes]
-        template = ERB.new(resources_template)
+        template = ERB.new(resources_template, 0, '<>')
         md = template.result(binding)
         path = File.dirname(config[:path])
         File.open(File.join(path,'README.md'),'a') do |f|
           f.write(md)
         end
       end
+    end
+
+    def partial(options)
+      partial_template = File.read(File.join(File.dirname(__FILE__),'templates','_%s.erb' % options[:template]))
+      @locals = options[:locals]
+      template = ERB.new(partial_template, 0, '<>')
+      r = template.result(binding).gsub /\n{2}/, "\n"
+      puts r.inspect
+      r
     end
 
     private
